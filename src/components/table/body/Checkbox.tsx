@@ -48,17 +48,8 @@ const StyledCheckboxCell = styled.td`
 `;
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef<HTMLInputElement>(null);
-
-    const resolvedRef = (ref ||
-      defaultRef) as React.MutableRefObject<HTMLInputElement>;
-
-    React.useEffect(() => {
-      if (resolvedRef && resolvedRef.current) {
-        resolvedRef.current.indeterminate = !!indeterminate;
-      }
-    }, [resolvedRef, indeterminate]);
+  ({ ...rest }, ref) => {
+    const resolvedRef = ref;
 
     return (
       <StyledCheckboxCell>

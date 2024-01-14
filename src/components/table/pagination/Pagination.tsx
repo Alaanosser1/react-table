@@ -1,18 +1,15 @@
 import React from "react";
-import styled from "styled-components";
-import { PaginationProps } from "./interface";
-
-const PaginationContainer = styled.div`
-  max-width: 1120px;
-  width: 1120px;
-  height: 70px;
-  margin: 0 auto;
-  margin-top: -2px;
-  border-radius: 0px 0px 10px 10px;
-  border-top: solid 1px #deebf4;
-
-  background-color: #ffffff;
-`;
+import { PaginationProps, PaginationButtonProps } from "./interface";
+import {
+  PaginationContainer,
+  NextButton,
+  PreviousButton,
+  FirstPageButton,
+  PageButton,
+  LastPageButton,
+  PaginationSection,
+  RowsPerPageSelect,
+} from "./PaginationStyles";
 
 const Pagination: React.FC<PaginationProps> = ({
   pageOptions,
@@ -21,21 +18,72 @@ const Pagination: React.FC<PaginationProps> = ({
   nextPage,
   canNextPage,
   state,
+  gotoPage,
+  setPageSize,
+  rowsPerPage,
+  setRowsPerPage,
 }) => {
   const { pageIndex } = state;
+
+  const handleRowsPerPageSelection = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setPageSize(Number(e.target.value));
+    setRowsPerPage(e.target.value);
+  };
 
   return (
     <>
       <PaginationContainer>
-        <span>
-          Page <strong>{pageIndex + 1}</strong> of {pageOptions.length}
-        </span>
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          Previous
-        </button>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          Next
-        </button>
+        <div className=""></div>
+        <PaginationSection>
+          <RowsPerPageSelect
+            onChange={handleRowsPerPageSelection}
+            value={rowsPerPage}
+          >
+            {Array.from({ length: 41 }, (_, index) => index + 8).map(
+              (value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              )
+            )}
+          </RowsPerPageSelect>
+          <NextButton
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+          ></NextButton>
+          {pageOptions.map((page: number) => {
+            return page == 0 ? (
+              <FirstPageButton
+                isActive={pageIndex == page}
+                onClick={() => gotoPage(page)}
+              >
+                {page + 1}
+              </FirstPageButton>
+            ) : page > 0 && page < pageOptions.length - 1 ? (
+              <PageButton
+                isActive={pageIndex == page}
+                onClick={() => gotoPage(page)}
+              >
+                {page + 1}
+              </PageButton>
+            ) : (
+              page == pageOptions.length - 1 && (
+                <LastPageButton
+                  isActive={pageIndex == page}
+                  onClick={() => gotoPage(page)}
+                >
+                  {page + 1}
+                </LastPageButton>
+              )
+            );
+          })}
+          <PreviousButton
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+          ></PreviousButton>
+        </PaginationSection>
       </PaginationContainer>
     </>
   );

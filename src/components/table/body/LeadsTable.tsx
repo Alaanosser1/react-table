@@ -1,43 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useTable, usePagination, useRowSelect } from "react-table";
+import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
 import { useQuery } from "react-query";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 import Pagination from "../pagination/Pagination";
-
-// Container for the entire table
-const Container = styled.div`
-  margin: 0 auto;
-  margin-top: 150px;
-`;
-const StyledTableContainer = styled.div`
-  max-width: 1120px; /* or any fixed width you prefer */
-  margin: 0 auto;
-  margin-top: 150px;
-  overflow-x: auto; /* use 'auto' instead of 'scroll' */
-`;
-
-const StyledTableBodyContainer = styled.tbody`
-  min-width: 1120px;
-  min-height: 514px;
-`;
-
-//Table Element
-const StyledTable = styled.table`
-  font-family: Poppins;
-  border-collapse: separate;
-  width: 100%;
-`;
-
-// Flex container for a table row
-const StyledTableRow = styled.tr`
-  display: flex;
-
-  &:nth-child(odd):not(:first-child) {
-    background-color: #f3faff;
-  }
-`;
+import {
+  Container,
+  StyledTableContainer,
+  StyledTableBodyContainer,
+  StyledTable,
+  StyledTableRow,
+} from "./BodyStyles";
 
 // API endpoint
 const API_ENDPOINT = "https://dummyjson.com/products";
@@ -50,8 +24,8 @@ const fetchData = async () => {
 
 // StyledLeadsTable component definition
 const StyledLeadsTable = () => {
-  // Use React Query's useQuery hook to fetch and manage data
   const { data, isLoading, isError } = useQuery("products", fetchData);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const columns = React.useMemo(
     () => [
@@ -61,7 +35,7 @@ const StyledLeadsTable = () => {
       },
       {
         Header: "Name",
-        accessor: "title",
+        accessor: (row: any) => row.title.substring(0, 15) + "...",
       },
       {
         Header: "Last Request",
@@ -69,7 +43,7 @@ const StyledLeadsTable = () => {
       },
       {
         Header: "Campaign",
-        accessor: (row: any) => row.description.substring(0, 19) + "...",
+        accessor: (row: any) => row.description.substring(0, 15) + "...",
       },
       {
         Header: "Adset",
@@ -92,10 +66,9 @@ const StyledLeadsTable = () => {
         accessor: "rating", // Update this with the correct accessor
       },
     ],
-    [] // Empty dependency array to ensure useMemo runs once
+    []
   );
 
-  // Check if data is available before using useTable
   const {
     getTableProps,
     getTableBodyProps,
@@ -105,27 +78,28 @@ const StyledLeadsTable = () => {
     previousPage,
     canNextPage,
     canPreviousPage,
+    gotoPage,
     state,
     pageOptions,
     prepareRow,
     selectedFlatRows,
     getToggleAllRowsSelectedProps,
+    setPageSize,
   } = useTable(
     {
       columns,
       data: data?.products || [],
-      initialState: { pageIndex: 0, pageSize: 8 },
+      initialState: { pageIndex: 0, pageSize: rowsPerPage },
     },
+    useSortBy,
     usePagination,
     useRowSelect
   );
 
-  // Render loading state if data is still loading
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  // Render error state if an error occurred
   if (isError) {
     return <div>Error fetching data</div>;
   }
@@ -155,6 +129,10 @@ const StyledLeadsTable = () => {
           canNextPage={canNextPage}
           canPreviousPage={canPreviousPage}
           state={state}
+          gotoPage={gotoPage}
+          setPageSize={setPageSize}
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
         />
       </Container>
       <pre>

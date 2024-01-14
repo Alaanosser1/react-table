@@ -8,7 +8,7 @@ const StyledAppContainer = styled.div`
   /* display: flex;
   flex-direction: column; */
   overflow-x: hidden;
-  background-color: gray;
+  background-color: #d6d2d2;
 `;
 
 function App() {
