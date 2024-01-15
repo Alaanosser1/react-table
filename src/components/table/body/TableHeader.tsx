@@ -20,15 +20,31 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   <>
     <Checkbox {...getToggleAllRowsSelectedProps()} />
     {Array.isArray(headerGroups) &&
-      headerGroups.map((headerGroup: any) => (
-        <StyledHeaderWrapper {...headerGroup.getHeaderGroupProps()}>
-          {headerGroup.headers.map((column: any) => (
+      headerGroups.map((headerGroup: any, groupIndex: number) => (
+        <StyledHeaderWrapper
+          {...headerGroup.getHeaderGroupProps()}
+          key={groupIndex}
+        >
+          {headerGroup.headers.map((column: any, columnIndex: number) => (
             <StyledTableHeaderCell
-              {...column.getHeaderProps(column.getSortByToggleProps())}
+              {...(columnIndex === 0
+                ? {}
+                : column.getHeaderProps(column.getSortByToggleProps()))}
+              key={columnIndex}
+              style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
             >
               <CellContainer>
-                <SortIcon src={sort} />
-                <StyledText>{column.render("Header")}</StyledText>
+                {columnIndex === 0 ? (
+                  <>
+                    <SortIcon />
+                    <StyledText>{column.render("Header")}</StyledText>
+                  </>
+                ) : (
+                  <>
+                    <SortIcon src={sort} />
+                    <StyledText>{column.render("Header")}</StyledText>
+                  </>
+                )}
               </CellContainer>
             </StyledTableHeaderCell>
           ))}

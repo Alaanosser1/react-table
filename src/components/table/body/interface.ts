@@ -3,6 +3,7 @@ import { InputHTMLAttributes } from "react";
 export interface TableRowProps {
   page: any;
   prepareRow: any;
+  columns: any;
 }
 
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {

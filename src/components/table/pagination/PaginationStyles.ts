@@ -7,7 +7,7 @@ import dropdownIcon from "../../../assets/svgs/dropdownIcon.svg";
 
 export const PaginationContainer = styled.div`
   max-width: 1120px;
-  width: 1120px;
+  width: 100%;
   height: 70px;
   margin: 0 auto;
   margin-top: -2px;
@@ -27,6 +27,16 @@ export const NextButton = styled.button`
   background-color: #ffffff;
   background: url(${next}) no-repeat center center;
   cursor: pointer;
+
+  &:hover {
+    background-color: #d5eaf2;
+    cursor: pointer;
+  }
+
+  &:active {
+    box-shadow: 0px 0px 0px 4px #f2f4f7;
+    z-index: 1;
+  }
 `;
 
 export const PreviousButton = styled.button`
@@ -38,6 +48,16 @@ export const PreviousButton = styled.button`
   background-color: #ffffff;
   background: url(${back}) no-repeat center center;
   cursor: pointer;
+
+  &:hover {
+    background-color: #d5eaf2;
+    cursor: pointer;
+  }
+
+  &:active {
+    box-shadow: 0px 0px 0px 4px #f2f4f7;
+    z-index: 1;
+  }
 `;
 
 export const FirstPageButton = styled.button<PaginationButtonProps>`
@@ -47,6 +67,16 @@ export const FirstPageButton = styled.button<PaginationButtonProps>`
   border-radius: 8px 0px 0px 8px;
   cursor: pointer;
   background-color: ${({ isActive }) => (isActive ? "#A9C7DB" : "#ffffff")};
+
+  &:hover {
+    background-color: ${({ isActive }) => (isActive ? "#A9C7DB" : "#f9fafb")};
+    cursor: pointer;
+  }
+
+  &:active {
+    box-shadow: 0px 0px 0px 4px #f2f4f7;
+    z-index: 1;
+  }
 `;
 
 export const PageButton = styled.button<PaginationButtonProps>`
@@ -55,6 +85,16 @@ export const PageButton = styled.button<PaginationButtonProps>`
   border: solid 1px #d0d5dd;
   cursor: pointer;
   background-color: ${({ isActive }) => (isActive ? "#A9C7DB" : "#ffffff")};
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: ${({ isActive }) => (isActive ? "#A9C7DB" : "#f9fafb")};
+    cursor: pointer;
+  }
+  &:active {
+    box-shadow: 0px 0px 0px 4px #f2f4f7;
+    z-index: 1;
+  }
 `;
 
 export const LastPageButton = styled.button<PaginationButtonProps>`
@@ -65,6 +105,15 @@ export const LastPageButton = styled.button<PaginationButtonProps>`
   background-color: #ffffff;
   cursor: pointer;
   background-color: ${({ isActive }) => (isActive ? "#A9C7DB" : "#ffffff")};
+
+  &:hover {
+    background-color: ${({ isActive }) => (isActive ? "#A9C7DB" : "#f9fafb")};
+    cursor: pointer;
+  }
+  &:active {
+    box-shadow: 0px 0px 0px 4px #f2f4f7;
+    z-index: 1;
+  }
 `;
 
 export const PaginationSection = styled.div`
@@ -88,4 +137,15 @@ export const RowsPerPageSelect = styled.select`
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9fafb;
+    cursor: pointer;
+  }
+
+  &:active {
+    box-shadow: 0px 0px 0px 4px #f2f4f7;
+  }
 `;

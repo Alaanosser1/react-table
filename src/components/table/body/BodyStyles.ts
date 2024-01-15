@@ -36,28 +36,26 @@ export const StyledCheckbox = styled.input`
   appearance: none;
   background-color: #ffffff;
   min-width: 20px;
-  min-height: 20px;
-  margin-right: 8px;
+  height: 20px;
+  /* margin-right: 8px; */
   cursor: pointer;
+  border: 1px solid #d0d5dd;
+  border-radius: 7px;
+  transition: background-image 0.2s;
 
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid #d0d5dd;
-    border-radius: 7px;
-  }
-
-  &:checked:before {
-    background-image: url(${checkBoxBg});
-    background-size: cover;
-    content: "";
+  &:checked {
+    background: url(${checkBoxBg}) center/cover;
     color: #ffffff;
     text-align: center;
     line-height: 18px;
+  }
+
+  &:hover {
+    background-color: #f9fafb;
+  }
+
+  &:active {
+    box-shadow: 0px 0px 0px 4px #f2f4f7;
   }
 `;
 
@@ -77,28 +75,27 @@ export const StyledCheckboxCell = styled.td`
 
 export const StyledDotsButton = styled.img``;
 
-// Dots button cell with styling
 export const StyledDotsButtonCell = styled.td`
-  position: relative;
   background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #deebf4;
   box-shadow: -3px 0 2px 0 rgba(0, 0, 0, 0.2);
-
   width: 25px;
-  /* height: 56px; */
   padding: 0 16px 0 16px;
   position: sticky;
   right: 0;
+
+  @media (max-width: 743px) {
+    position: relative;
+  }
 `;
 
 // Styled header cell for the table
 export const StyledTableHeaderCell = styled.th`
   padding: 0 14px 0 14px;
   text-align: left;
-  min-width: 150px;
   height: 32px;
   font-weight: 400;
   font-size: 12px;
@@ -106,6 +103,12 @@ export const StyledTableHeaderCell = styled.th`
 
   &:not(:last-child) {
     border-right: solid #bac0c7 1px;
+  }
+  &:not(:first-child) {
+    &:hover {
+      background-color: #d5eaf2;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -136,7 +139,6 @@ export const CellContainer = styled.div`
 export const StyledTableCell = styled.td`
   padding: 0 14px 0 14px;
   text-align: left;
-  min-width: 150px;
   height: 44px;
   font-weight: 400;
   font-size: 12px;

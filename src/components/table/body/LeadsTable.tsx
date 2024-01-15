@@ -32,38 +32,61 @@ const StyledLeadsTable = () => {
       {
         Header: "ID",
         accessor: "id",
+        minWidth: 31,
+        maxWidth: 31,
       },
       {
         Header: "Name",
         accessor: (row: any) => row.title.substring(0, 15) + "...",
+        minWidth: 150,
+        maxWidth: 150,
       },
       {
         Header: "Last Request",
-        accessor: "brand", // You might want to update this with the correct accessor
+        accessor: "brand",
+        minWidth: 150,
+        maxWidth: 150,
+      },
+      {
+        Header: "Contact",
+        accessor: "contact",
+        minWidth: 121,
       },
       {
         Header: "Campaign",
         accessor: (row: any) => row.description.substring(0, 15) + "...",
-      },
-      {
-        Header: "Adset",
-        accessor: "stock", // Update this with the correct accessor
+        minWidth: 121,
+        maxWidth: 121,
       },
       {
         Header: "Status",
-        accessor: "category", // Update this with the correct accessor
+        accessor: "category",
+        minWidth: 121,
+        maxWidth: 121,
+      },
+      {
+        Header: "Adset",
+        accessor: "stock",
+        minWidth: 143,
+        maxWidth: 143,
       },
       {
         Header: "Agent",
-        accessor: "discountPercentage", // Update this with the correct accessor
+        accessor: "discountPercentage",
+        minWidth: 115,
+        maxWidth: 115,
       },
       {
         Header: "Last Contact",
-        accessor: "price", // Update this with the correct accessor
+        accessor: "price",
+        minWidth: 156,
+        maxWidth: 156,
       },
       {
         Header: "Last Comment",
-        accessor: "rating", // Update this with the correct accessor
+        accessor: "rating",
+        minWidth: 252,
+        maxWidth: 252,
       },
     ],
     []
@@ -118,7 +141,7 @@ const StyledLeadsTable = () => {
                 />
               </StyledTableRow>
               {/* Data rows */}
-              <TableRow page={page} prepareRow={prepareRow} />
+              <TableRow page={page} prepareRow={prepareRow} columns={columns} />
             </StyledTableBodyContainer>
           </StyledTable>
         </StyledTableContainer>
