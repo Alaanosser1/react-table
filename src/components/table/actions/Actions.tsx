@@ -1,22 +1,25 @@
+// Actions.tsx
+
 import React, { ReactNode, useState, useEffect, useRef } from "react";
+import ColumnVisibilityComponent from "./ColumnVisibility";
 import {
-  ColumnVisibilityContainer,
-  ColumnVisibilityCheckbox,
-  ColumnVisibilityItemContainer,
-  ColumnVisibilityItemLabel,
-  ColumnVisibilityRestoreDefault,
   ActionsContainer,
+  TableStatsContainer,
+  ActionsRightSide,
   ColumnVisibilityButton,
-  DimmedOverlay, // Import the DimmedOverlay styled component
 } from "./ActionStyles";
 import { ActionProps } from "./interface";
 
 const Actions: React.FC<ActionProps> = ({
   allColumns,
   toggleHideAllColumns,
+  rowsPerPage,
+  totalNumberOfRows,
+  state,
 }) => {
   const [toggleColumnVisibilityContainer, setToggleColumnVisibilityContainer] =
     useState(false);
+  const { pageIndex } = state;
 
   const visibilityContainerRef = useRef<HTMLDivElement>(null);
 
@@ -35,61 +38,44 @@ const Actions: React.FC<ActionProps> = ({
   };
 
   useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setToggleColumnVisibilityContainer(false);
-      }
-    };
-
     const body = document.body;
 
     if (toggleColumnVisibilityContainer) {
-      body.classList.add("no-scroll"); // Optional: Prevent scrolling when the overlay is active
-      document.addEventListener("keydown", handleEscKey);
+      body.classList.add("no-scroll");
       document.addEventListener("mousedown", handleOutsideClick);
     } else {
       body.classList.remove("no-scroll");
-      document.removeEventListener("keydown", handleEscKey);
       document.removeEventListener("mousedown", handleOutsideClick);
     }
 
     return () => {
       body.classList.remove("no-scroll");
-      document.removeEventListener("keydown", handleEscKey);
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [toggleColumnVisibilityContainer]);
 
+  console.log(pageIndex, "INDEX");
+
   return (
     <>
-      {toggleColumnVisibilityContainer && (
-        <DimmedOverlay className="dimmed-overlay" />
-      )}
-      {toggleColumnVisibilityContainer && (
-        <ColumnVisibilityContainer ref={visibilityContainerRef}>
-          {allColumns.map((column: any) => (
-            <ColumnVisibilityItemContainer key={column.id}>
-              <ColumnVisibilityCheckbox
-                type="checkbox"
-                {...column.getToggleHiddenProps()}
-              />
-              <ColumnVisibilityItemLabel>
-                {column.Header as ReactNode}
-              </ColumnVisibilityItemLabel>
-            </ColumnVisibilityItemContainer>
-          ))}
-          <ColumnVisibilityRestoreDefault
-            onClick={() => toggleHideAllColumns(false)}
-          >
-            Restore Default
-          </ColumnVisibilityRestoreDefault>
-        </ColumnVisibilityContainer>
-      )}
+      <ColumnVisibilityComponent
+        allColumns={allColumns}
+        toggleHideAllColumns={toggleHideAllColumns}
+        visibilityContainerRef={visibilityContainerRef}
+        isContainerVisible={toggleColumnVisibilityContainer}
+        onHideContainer={() => setToggleColumnVisibilityContainer(false)}
+      />
       <ActionsContainer>
-        <div className=""></div>
-        <ColumnVisibilityButton onClick={handleToggle}>
-          Columns
-        </ColumnVisibilityButton>
+        <TableStatsContainer>
+          <strong>Leads</strong>
+          &nbsp;{rowsPerPage * pageIndex + 1} - {rowsPerPage * (pageIndex + 1)}{" "}
+          From {totalNumberOfRows}
+        </TableStatsContainer>
+        <ActionsRightSide className="">
+          <ColumnVisibilityButton onClick={handleToggle}>
+            Columns
+          </ColumnVisibilityButton>
+        </ActionsRightSide>
       </ActionsContainer>
     </>
   );

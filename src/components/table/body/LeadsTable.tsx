@@ -110,7 +110,6 @@ const StyledLeadsTable = () => {
     getToggleAllRowsSelectedProps,
     setPageSize,
     allColumns,
-    getToggleHideAllColumnsProps,
     toggleHideAllColumns,
   } = useTable(
     {
@@ -133,10 +132,14 @@ const StyledLeadsTable = () => {
 
   return (
     <>
+      {console.log(data.products.length, "DATA")}
       <Container>
         <Actions
           allColumns={allColumns}
           toggleHideAllColumns={toggleHideAllColumns}
+          totalNumberOfRows={data.products.length}
+          rowsPerPage={rowsPerPage}
+          state={state}
         />
         <StyledTableContainer>
           <StyledTable {...getTableProps()}>

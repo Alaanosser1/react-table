@@ -15,6 +15,10 @@ export const ActionsContainer = styled.div`
   max-width: 1088px;
   margin: 0 auto;
   overflow-x: auto;
+  @media (max-width: 744px) {
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 export const ColumnVisibilityButton = styled.button`
@@ -81,14 +85,14 @@ export const ColumnVisibilityContainer = styled.div`
   z-index: 1000;
   transition-duration: 0.5ms;
 
-  @media (max-width: 744px) {
+  /* @media (max-width: 744px) {
     max-width: 100%;
     height: 100vh;
     right: 0;
     top: 0;
     padding-top: 30%;
     overflow-y: hidden;
-  }
+  } */
 `;
 
 export const ColumnVisibilityCheckbox = styled.input`
@@ -125,10 +129,10 @@ export const ColumnVisibilityCheckbox = styled.input`
 
 export const ColumnVisibilityItemContainer = styled.div`
   display: flex;
-  @media (max-width: 744px) {
+  /* @media (max-width: 744px) {
     overflow-y: hidden;
     margin-left: 8%;
-  }
+  } */
 `;
 
 export const ColumnVisibilityItemLabel = styled.label`
@@ -171,3 +175,41 @@ export const DimmedOverlay = styled.div`
   z-index: 9;
   pointer-events: none; /* Allows interaction with elements beneath the overlay */
 `;
+
+export const TableStatsContainer = styled.div`
+  color: var(--text, #2f353c);
+
+  /* Body 12 */
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+  text-align: center;
+  margin: 10px;
+`;
+
+export const ActionsRightSide = styled.div`
+  color: var(--text, #2f353c);
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+  text-align: center;
+  display: flex;
+`;
+
+// export const NewlyAssinedToggleContainer = styled.div`
+//   margin-right: 40px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   height: 100%;
+// `;
+//
+// export const NewlyAssignedLabel = styled.label`
+//   margin: 0 auto;
+// `;
