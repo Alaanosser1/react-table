@@ -21,9 +21,7 @@ const TableRow: React.FC<TableRowProps> = ({ page, prepareRow, columns }) => {
               checked={row.isSelected}
             />
             <StyledRowWrapper>
-              {row.cells.map((cell: any, index: number) => {
-                cell.column.Header === columns[index].Header &&
-                  console.log("Logging inside the loop:", cell, columns[index]);
+              {row.cells.map((cell: any) => {
                 const matchingColumn = columns.find(
                   (column: any) => column.Header === cell.column.Header
                 );

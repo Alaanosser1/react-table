@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import {
   ColumnVisibilityCheckbox,
   ColumnVisibilityContainer,
-} from "../body/BodyStyles";
+} from "../actions/ActionStyles";
 import { PaginationContainer } from "./PaginationStyles";
 
 const ColumnVisibilityControl = () => {
