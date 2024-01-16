@@ -149,3 +149,45 @@ export const RowsPerPageSelect = styled.select`
     box-shadow: 0px 0px 0px 4px #f2f4f7;
   }
 `;
+
+export const PageSelection = styled.select`
+  border-radius: 8px;
+  border: 1px solid var(--Gray-300, #d0d5dd);
+  background: var(--Base-White, #fff);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  display: flex;
+  width: 48px;
+  height: 38px;
+  padding: 10px 18px;
+  flex-direction: column;
+  cursor: pointer;
+  text-align-last: center; /* Center the text in the selected option */
+  text-align: center; /* Center the text for other browsers */
+
+  &:hover {
+    background-color: #f9fafb;
+    cursor: pointer;
+  }
+
+  &:active {
+    box-shadow: 0px 0px 0px 4px #f2f4f7;
+  }
+`;
+
+export const PaginationButtonsDesktopWrapper = styled.div`
+  display: none; /* Hidden by default */
+
+  @media (min-width: 744px) {
+    display: block; /* Visible on screens wider than 743px */
+  }
+`;
+export const PaginationMobileDesktopWrapper = styled.div`
+  display: none; /* Hidden by default */
+
+  @media (max-width: 743px) {
+    display: block; /* Visible on screens wider than 743px */
+  }
+`;

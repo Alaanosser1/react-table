@@ -9,6 +9,9 @@ import {
   LastPageButton,
   PaginationSection,
   RowsPerPageSelect,
+  PaginationButtonsDesktopWrapper,
+  PaginationMobileDesktopWrapper,
+  PageSelection,
 } from "./PaginationStyles";
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -32,6 +35,10 @@ const Pagination: React.FC<PaginationProps> = ({
     setRowsPerPage(e.target.value);
   };
 
+  const handlePageSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    gotoPage(Number(e.target.value));
+  };
+
   return (
     <>
       <PaginationContainer>
@@ -53,32 +60,44 @@ const Pagination: React.FC<PaginationProps> = ({
             onClick={() => previousPage()}
             disabled={!canPreviousPage}
           ></NextButton>
-          {pageOptions.map((page: number) => {
-            return page == 0 ? (
-              <FirstPageButton
-                isActive={pageIndex == page}
-                onClick={() => gotoPage(page)}
-              >
-                {page + 1}
-              </FirstPageButton>
-            ) : page > 0 && page < pageOptions.length - 1 ? (
-              <PageButton
-                isActive={pageIndex == page}
-                onClick={() => gotoPage(page)}
-              >
-                {page + 1}
-              </PageButton>
-            ) : (
-              page == pageOptions.length - 1 && (
-                <LastPageButton
+          <PaginationButtonsDesktopWrapper>
+            {console.log(pageOptions, "OPTIONS")}
+            {pageOptions.map((page: number) => {
+              return page == 0 ? (
+                <FirstPageButton
                   isActive={pageIndex == page}
                   onClick={() => gotoPage(page)}
                 >
                   {page + 1}
-                </LastPageButton>
-              )
-            );
-          })}
+                </FirstPageButton>
+              ) : page > 0 && page < pageOptions.length - 1 ? (
+                <PageButton
+                  isActive={pageIndex == page}
+                  onClick={() => gotoPage(page)}
+                >
+                  {page + 1}
+                </PageButton>
+              ) : (
+                page == pageOptions.length - 1 && (
+                  <LastPageButton
+                    isActive={pageIndex == page}
+                    onClick={() => gotoPage(page)}
+                  >
+                    {page + 1}
+                  </LastPageButton>
+                )
+              );
+            })}
+          </PaginationButtonsDesktopWrapper>
+          <PaginationMobileDesktopWrapper>
+            <PageSelection onChange={handlePageSelection} value={pageIndex}>
+              {pageOptions.map((value: any) => (
+                <option key={value} value={value}>
+                  {value + 1}
+                </option>
+              ))}
+            </PageSelection>
+          </PaginationMobileDesktopWrapper>
           <PreviousButton
             onClick={() => nextPage()}
             disabled={!canNextPage}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
 import { useQuery } from "react-query";
@@ -11,7 +11,12 @@ import {
   StyledTableBodyContainer,
   StyledTable,
   StyledTableRow,
+  ColumnVisibilityContainer,
+  ColumnVisibilityCheckbox,
+  ColumnVisibilityItemContainer,
+  ColumnVisibilityItemLabel,
 } from "./BodyStyles";
+import Checkbox from "./Checkbox";
 
 // API endpoint
 const API_ENDPOINT = "https://dummyjson.com/products";
@@ -108,6 +113,8 @@ const StyledLeadsTable = () => {
     selectedFlatRows,
     getToggleAllRowsSelectedProps,
     setPageSize,
+    allColumns,
+    getToggleHideAllColumnsProps,
   } = useTable(
     {
       columns,
@@ -130,6 +137,27 @@ const StyledLeadsTable = () => {
   return (
     <>
       <Container>
+        <ColumnVisibilityContainer>
+          <ColumnVisibilityItemContainer>
+            <ColumnVisibilityCheckbox
+              type="checkbox"
+              {...getToggleHideAllColumnsProps()}
+            />
+            <ColumnVisibilityItemLabel>Toggle All</ColumnVisibilityItemLabel>
+          </ColumnVisibilityItemContainer>
+          {allColumns.map((column) => (
+            <ColumnVisibilityItemContainer className="">
+              <ColumnVisibilityCheckbox
+                type="checkbox"
+                {...column.getToggleHiddenProps()}
+              />
+              <ColumnVisibilityItemLabel>
+                {column.Header as ReactNode}
+              </ColumnVisibilityItemLabel>
+            </ColumnVisibilityItemContainer>
+          ))}
+          <br />
+        </ColumnVisibilityContainer>
         <StyledTableContainer>
           <StyledTable {...getTableProps()}>
             <StyledTableBodyContainer {...getTableBodyProps()}>

@@ -12,7 +12,6 @@ import {
 const TableRow: React.FC<TableRowProps> = ({ page, prepareRow, columns }) => {
   return (
     <>
-      {console.log(page)}
       {page.map((row: any) => {
         prepareRow(row);
         return (
@@ -22,14 +21,29 @@ const TableRow: React.FC<TableRowProps> = ({ page, prepareRow, columns }) => {
               checked={row.isSelected}
             />
             <StyledRowWrapper>
-              {row.cells.map((cell: any, index: number) => (
-                <StyledTableCell
-                  {...cell.getCellProps()}
-                  style={{ minWidth: columns[index].minWidth }}
-                >
-                  <StyledText>{cell.render("Cell")}</StyledText>
-                </StyledTableCell>
-              ))}
+              {row.cells.map((cell: any, index: number) => {
+                cell.column.Header === columns[index].Header &&
+                  console.log("Logging inside the loop:", cell, columns[index]);
+                const matchingColumn = columns.find(
+                  (column: any) => column.Header === cell.column.Header
+                );
+                return (
+                  <StyledTableCell
+                    key={cell.column.id}
+                    {...cell.getCellProps()}
+                    style={{
+                      ...(matchingColumn
+                        ? {
+                            minWidth: matchingColumn.minWidth,
+                            maxWidth: matchingColumn.maxWidth,
+                          }
+                        : {}),
+                    }}
+                  >
+                    <StyledText>{cell.render("Cell")}</StyledText>
+                  </StyledTableCell>
+                );
+              })}
             </StyledRowWrapper>
             <DotsButton />
           </StyledTableRow>
