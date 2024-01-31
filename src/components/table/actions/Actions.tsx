@@ -54,8 +54,6 @@ const Actions: React.FC<ActionProps> = ({
     };
   }, [toggleColumnVisibilityContainer]);
 
-  console.log(pageIndex, "INDEX");
-
   return (
     <>
       <ColumnVisibilityComponent

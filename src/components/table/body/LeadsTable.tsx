@@ -1,6 +1,13 @@
 import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
-import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
+import {
+  useTable,
+  usePagination,
+  useRowSelect,
+  useSortBy,
+  useResizeColumns,
+  useFlexLayout,
+} from "react-table";
 import { useQuery } from "react-query";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
@@ -35,59 +42,64 @@ const StyledLeadsTable = () => {
         accessor: "id",
         minWidth: 31,
         maxWidth: 31,
+        width: 31,
       },
       {
         Header: "Name",
-        accessor: (row: any) => row.title.substring(0, 15) + "...",
+        // accessor: (row: any) => row.title.substring(0, 15) + "...",
+        accessor: "title",
         minWidth: 150,
         maxWidth: 150,
+        width: 150,
       },
       {
         Header: "Last Request",
         accessor: "brand",
         minWidth: 150,
-        maxWidth: 150,
+        width: 150,
       },
       {
         Header: "Contact",
         accessor: "contact",
         minWidth: 121,
+        width: 121,
       },
       {
         Header: "Campaign",
-        accessor: (row: any) => row.description.substring(0, 15) + "...",
-        minWidth: 121,
-        maxWidth: 121,
+        // accessor: (row: any) => row.description.substring(0, 15) + "...",
+        accessor: "description",
+        minWidth: 300,
+        width: 300,
       },
       {
         Header: "Status",
         accessor: "category",
         minWidth: 121,
-        maxWidth: 121,
+        width: 121,
       },
       {
         Header: "Adset",
         accessor: "stock",
         minWidth: 143,
-        maxWidth: 143,
+        width: 143,
       },
       {
         Header: "Agent",
         accessor: "discountPercentage",
         minWidth: 115,
-        maxWidth: 115,
+        width: 115,
       },
       {
         Header: "Last Contact",
         accessor: "price",
         minWidth: 156,
-        maxWidth: 156,
+        width: 156,
       },
       {
         Header: "Last Comment",
         accessor: "rating",
         minWidth: 252,
-        maxWidth: 252,
+        width: 252,
       },
     ],
     []
@@ -116,10 +128,13 @@ const StyledLeadsTable = () => {
       columns,
       data: data?.products || [],
       initialState: { pageIndex: 0, pageSize: rowsPerPage },
+      columnResizeMode: "onChange",
     },
     useSortBy,
     usePagination,
-    useRowSelect
+    useRowSelect,
+    useResizeColumns,
+    useFlexLayout
   );
 
   if (isLoading) {
@@ -130,9 +145,10 @@ const StyledLeadsTable = () => {
     return <div>Error fetching data</div>;
   }
 
+  console.log(headerGroups[0].headers);
+
   return (
     <>
-      {console.log(data.products.length, "DATA")}
       <Container>
         <Actions
           allColumns={allColumns}
@@ -149,10 +165,17 @@ const StyledLeadsTable = () => {
                 <TableHeader
                   headerGroups={headerGroups}
                   getToggleAllRowsSelectedProps={getToggleAllRowsSelectedProps}
+                  useResizeColumns={useResizeColumns}
                 />
               </StyledTableRow>
               {/* Data rows */}
-              <TableRow page={page} prepareRow={prepareRow} columns={columns} />
+              <TableRow
+                page={page}
+                prepareRow={prepareRow}
+                columns={columns}
+                headerGroups={headerGroups}
+                useResizeColumns={useResizeColumns}
+              />
             </StyledTableBodyContainer>
           </StyledTable>
         </StyledTableContainer>

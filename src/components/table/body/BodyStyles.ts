@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import tableCheckBoxBg from "../../../assets/svgs/tablecheckboxIcon.svg";
-import untoggledVisibilityCheckbox from "../../../assets/svgs/toggledVisibilityCheckbox.svg";
-import toggledVisibilityCheckbox from "../../../assets/svgs/untoggledVisibilityCheckbox.svg";
+import dotsImage from "../../../assets/svgs/dots.svg";
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -71,9 +70,18 @@ export const StyledCheckboxCell = styled.td`
   width: 25px;
   padding: 0 16px 0 16px;
   left: 0;
+  z-index: 2;
 `;
 
-export const StyledDotsButton = styled.img``;
+export const StyledDotsButton = styled.button`
+  height: 100%;
+  background-image: url(${dotsImage});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+`;
 
 export const StyledDotsButtonCell = styled.td`
   background-color: #ffffff;
@@ -100,6 +108,7 @@ export const StyledTableHeaderCell = styled.th`
   font-weight: 400;
   font-size: 12px;
   color: #4b535f;
+  position: relative;
 
   &:not(:last-child) {
     border-right: solid #bac0c7 1px;
@@ -119,6 +128,7 @@ export const StyledHeaderWrapper = styled.div`
   padding: 4px 0 8px 16px;
   background-color: #e6f0f4;
   min-width: 1120px;
+  display: flex;
 `;
 
 // Text component with additional styling
@@ -135,18 +145,23 @@ export const SortIcon = styled.img`
 export const HeaderCellContainer = styled.div`
   display: flex;
   margin-bottom: 10px;
+  position: relative;
 `;
 
 // Styled regular cell for the table
 export const StyledTableCell = styled.td`
-  padding: 0 14px 0 14px;
+  padding: 0 14px;
   text-align: left;
-  height: 44px;
+  height: auto; /* Change height to auto to allow content to determine height */
   font-weight: 400;
   font-size: 12px;
   color: #313131;
   gap: 8px;
   max-width: 150px;
+  white-space: normal; /* Change white-space to normal to allow text wrapping */
+  overflow: visible; /* Change overflow to visible to allow content to overflow */
+  text-overflow: clip; /* Change text-overflow to clip to handle the overflow */
+  max-height: 40px; /* Adjust max-height to control the maximum height of the cell */
 
   &:not(:last-child) {
     border-right: solid #bac0c7 1px;
@@ -155,7 +170,7 @@ export const StyledTableCell = styled.td`
 
 // Wrapper for rows with additional styling
 export const StyledRowWrapper = styled.div`
-  max-height: 60px;
+  /* max-height: 60px; */
   min-height: 40px;
   padding: 4px 0 8px 16px;
   min-width: 1120px;
@@ -165,4 +180,46 @@ export const StyledRowWrapper = styled.div`
     background-color: #d5eaf2;
     cursor: pointer;
   }
+`;
+
+export const TableRowMoreActionsContainer = styled.div`
+  display: inline-flex;
+  padding: 16px;
+  flex-direction: column;
+  position: absolute;
+  right: 17%;
+  /* top: 18%; */
+  gap: 16px;
+  border-radius: 0px 0px 4px 4px;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  height: 64px;
+  max-height: 100%;
+  width: 100%;
+  max-width: 352px;
+  z-index: 1000;
+  transition-duration: 0.5ms;
+`;
+
+export const Resizer = styled.div`
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -3px;
+  height: 100%;
+  width: 5px;
+  background-color: #27bbff;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+  border-radius: 6px;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+export const ResizerIsResizing = styled(Resizer)`
+  background-color: #2eff31;
+  opacity: 1;
 `;

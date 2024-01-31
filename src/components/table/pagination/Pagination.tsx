@@ -61,7 +61,6 @@ const Pagination: React.FC<PaginationProps> = ({
             disabled={!canPreviousPage}
           ></NextButton>
           <PaginationButtonsDesktopWrapper>
-            {console.log(pageOptions, "OPTIONS")}
             {pageOptions.map((page: number) => {
               return page == 0 ? (
                 <FirstPageButton

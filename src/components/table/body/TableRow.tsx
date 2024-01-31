@@ -7,35 +7,41 @@ import {
   StyledTableRow,
   StyledRowWrapper,
   StyledText,
+  TableRowMoreActionsContainer,
+  StyledDotsButton,
+  StyledDotsButtonCell,
 } from "./BodyStyles";
+import { useState } from "react";
+const TableRow: React.FC<TableRowProps> = ({
+  page,
+  prepareRow,
+  headerGroups,
+  useResizeColumns,
+}) => {
+  // console.log(headerGroups[0].headers, "HEADERGROUPS");
+  const [isRowActionsActive, setIsRowActionsActive] = useState(false);
 
-const TableRow: React.FC<TableRowProps> = ({ page, prepareRow, columns }) => {
   return (
     <>
       {page.map((row: any) => {
         prepareRow(row);
+
         return (
-          <StyledTableRow {...row.getRowProps()}>
+          <StyledTableRow {...row.getRowProps()} key={row.id}>
             <Checkbox
               {...row.getToggleRowSelectedProps()}
               checked={row.isSelected}
             />
             <StyledRowWrapper>
-              {row.cells.map((cell: any) => {
-                const matchingColumn = columns.find(
-                  (column: any) => column.Header === cell.column.Header
-                );
+              {row.cells.map((cell: any, index: number) => {
+                const matchingColumn = headerGroups[0].headers[index];
+
                 return (
                   <StyledTableCell
                     key={cell.column.id}
                     {...cell.getCellProps()}
                     style={{
-                      ...(matchingColumn
-                        ? {
-                            minWidth: matchingColumn.minWidth,
-                            maxWidth: matchingColumn.maxWidth,
-                          }
-                        : {}),
+                      minWidth: matchingColumn.width,
                     }}
                   >
                     <StyledText>{cell.render("Cell")}</StyledText>
@@ -43,7 +49,9 @@ const TableRow: React.FC<TableRowProps> = ({ page, prepareRow, columns }) => {
                 );
               })}
             </StyledRowWrapper>
-            <DotsButton />
+            <StyledDotsButtonCell>
+              <StyledDotsButton onClick={() => setIsRowActionsActive(true)} />
+            </StyledDotsButtonCell>
           </StyledTableRow>
         );
       })}
